@@ -1,27 +1,52 @@
 
+import { useState } from 'react'
 import './App.css'
-import Login from './login/Login';
-import Tables from './tables/Tables';
-// Nuestro cliente, debido a traumas pasados, está en guerra abierta con todos los usuarios que eligen como nombre de usuario una palabra que contenga la letra o (sea mayúscula o minúscula).
-// Teniendo esto en cuenta, se nos ha pedido que creemos el componente Login.js que contenga un único input donde el usuario ingresa su username y un botón que diga Registrarse.
-// Funcionalidades:
-// El usuario ingresa su nombre de usuario y apreta en Registrarse. Si las condiciones se cumplen exitosamente, le saldrá el mensaje con una alerta de JavaScript que diga “¡Usuario registrado correctamente!”
-// Además, en un elemento <p> abajo del botón, se debe ir visualizando el valor ingresado a medida que el usuario lo ingresa en el input.
-// Condiciones
-// Si el usuario en algún momento ingresa en el input una o/O se le debe enviar una alerta de JavaScript que diga “Por favor, ¡Nombres de usuario sin la letra o!”
-// Si al hacer click en registrarse, el nombre de usuario está vacío o posee la letra o en su cadena de caracteres, enviar una alerta de JavaScript con el mensaje “Usuario inválido para registrarse”
+import ListHomeWork from './listHomework/ListHomeWork'
+import NewHomework from './newHomework/NewHomework'
 
 
 
+
+//Debemos crear una aplicación de manejo de tareas personales.
+//La app nos debe permitir:
+//Agregar una nueva tarea a la lista. 
+//Marcar una tarea como completada e indicarlo de alguna manera(tachando el texto o cambiando el color del mismo(gris claro, por ejemplo)).
+//Borrar una tarea de la lista.
+//Sugerencias:
+//Crear el estado de las tareas en App.js para que se facilite el pasaje entre componentes. 
+//Crear un componente tipo lista que nos muestre todas las tareas de una lista. 
+//Crear un componente que nos permite agregar una nueva tarea.
+const HOMEWORKS = [
+  {id : 1,
+  homeworkName: "Limpiar los platos",
+  done : false,
+},
+{
+  id : 2,
+  homeworkName:"Cocinar la cena",
+  done : true,
+}]
 
 function App() {
-	
-		
+  const [homework , setHomework] = useState(HOMEWORKS)
+	const  saveHomeworkDataHandler = (enteredHomeworkData) =>{
+    const homeworkData ={
+      ...enteredHomeworkData,
+      id: Math.random().toString(),
+    }
+    setHomework((prev)=>[...prev, homeworkData])
+  }
+  const saveHandleDelete = (index) =>{
+    const newHomework = [...homework];
+    newHomework.splice(index,1);
+    setHomework(newHomework)
+  }
 
   return (
     <div>
-		<p>Practica 3</p>
-		<Login/>
+      <h2>Practica 4</h2>
+      <NewHomework onHomeworkDataSaved={saveHomeworkDataHandler}/>
+      <ListHomeWork homework ={homework} onDelete={saveHandleDelete} />
     </div>
   )
 }
