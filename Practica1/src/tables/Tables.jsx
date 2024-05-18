@@ -5,7 +5,8 @@ import TableItem from '../tableItem/TableItem'
 import { Table } from 'react-bootstrap'
 
 const Tables = ({netIncomes}) => {
-
+    const incomes= netIncomes.map((i)=>(i.income))
+    const total = incomes.reduce((accumulator, average)=> accumulator + average,0 );
     
   return (
    <div>
@@ -22,9 +23,11 @@ const Tables = ({netIncomes}) => {
             {netIncomes.map((i,index)=>(
                 <TableItem
                 key={index+1}
+                number={index+1}
                 brand={i.brand}
                 incomes={i.income}/>
             ))}
+            <p>Total de ingresos {total}</p>
         </tbody>
         
         
